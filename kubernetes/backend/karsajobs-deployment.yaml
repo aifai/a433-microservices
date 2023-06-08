@@ -23,12 +23,12 @@ spec:
           value: "8080"
         - name: MONGO_HOST
           value: "mongodb"
-        - name: MONGO_INITDB_ROOT_USERNAME
+        - name: MONGO_USER
           valueFrom:
             secretKeyRef:
               name: mongodb-secret
               key: MONGO_ROOT_USERNAME
-        - name: MONGO_INITDB_ROOT_PASSWORD
+        - name: MONGO_PASS
           valueFrom:
             secretKeyRef:
               name: mongodb-secret

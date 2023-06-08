@@ -1,35 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: karsajobs
+  name: app-backend
+  labels:
+    app: backend
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: karsajobs
-  replicas: 1
+      app: backend
   template:
-    metadata: 
-      labels: 
-        app: karsajobs
+    metadata:
+      labels:
+        app: backend
     spec:
       containers:
-      - name: karsajobs
-        image: ghcr.io/aifai/karsajobs
-        command:
-        ports:
-          - containerPort: 8080
-        env:
-        - name: APP_PORT
-          value: "8080"
-        - name: MONGO_HOST
-          value: "mongodb"
-        - name: MONGO_USER
-          valueFrom:
-            secretKeyRef:
-              name: mongodb-secret
-              key: MONGO_ROOT_USERNAME
-        - name: MONGO_PASS
-          valueFrom:
-            secretKeyRef:
-              name: mongodb-secret
-              key: MONGO_ROOT_PASSWORD
+        - name: karsajobs
+          image: ghcr.io/aifai/karsajobs
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_PORT
+              value: '8080'
+            - name: MONGO_HOST
+              value: 'mongo'
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: MONGO_ROOT_USERNAME
+            - name: MONGO_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: MONGO_ROOT_PASSWORD

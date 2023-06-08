@@ -1,46 +1,51 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: mongodb
+  name: mongo
   labels:
-    app: mongodb
+    app: mongo
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: mongodb
+      app: mongo
+  serviceName: mongo
+  replicas: 1
+  minReadySeconds: 10
   template:
     metadata:
       labels:
-        app: mongodb
+        app: mongo
     spec:
+      terminationGracePeriodSeconds: 10
       containers:
-      - name: mongodb
-        image: mongo
-        ports:
-        - containerPort: 27017
-        env:
-        - name: MONGO_INITDB_ROOT_USERNAME_FILE
-          value: /etc/mongo-credentials/MONGO_ROOT_USERNAME
-        - name: MONGO_INITDB_ROOT_PASSWORD_FILE
-          value: etc/mongo-credentials/MONGO_ROOT_PASSWORD
-        volumeMounts:
-        - name: secret
-          mountPath:  /etc/mongo-credentials
-        - name: mongodb-configmap
-          mountPath: /config
-        - name: persistent-volume
-          mountPath: /data/db
+        - name: mongo
+          image: mongo:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME_FILE
+              value: /etc/mongo-credentials/MONGO_ROOT_USERNAME
+            - name: MONGO_INITDB_ROOT_PASSWORD_FILE
+              value: /etc/mongo-credentials/MONGO_ROOT_PASSWORD
+          ports:
+            - containerPort: 27017
+              name: mongo
+          volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data/db
+            - name: mongo-configmap
+              mountPath: /config
+            - name: mongo-secret
+              mountPath: /etc/mongo-credentials
       volumes:
-      - name: persistent-volume
-        persistentVolumeClaim:
-          claimName: mongo-pv-claim
-      - name: secret
-        secret:
-          secretName: mongodb-secret
-      - name: mongodb-configmap
-        configMap:
-          name: mongodb-standalone
-          items:
-          - key: mongo.conf
-            path: mongo.conf
+        - name: mongo-persistent-storage
+          persistentVolumeClaim:
+            claimName: mongo-pv-claim
+        - name: mongo-configmap
+          configMap:
+            name: mongo-configmap
+            items:
+              - key: mongo.conf
+                path: mongo.conf
+        - name: mongo-secret
+          secret:
+            secretName: mongo-secret

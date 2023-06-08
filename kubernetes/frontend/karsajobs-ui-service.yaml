@@ -1,12 +1,12 @@
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: karsajobs-ui
+  name: frontend
+  labels:
+    app: frontend
 spec:
-  type: NodePort
-  selector:
-    app: karsajobs-ui
   ports:
-  - protocol: TCP
-    port: 8000
-    nodePort: 30001
+    - port: 8000
+  selector:
+    app: frontend
+  type: NodePort

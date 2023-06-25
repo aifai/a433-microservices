@@ -14,3 +14,6 @@ git fetch origin
 git checkout -b karsajobs origin/karsajobs
 ```
 
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"order": {"book_name": "Harry Potter","author": "J.K Rowling","buyer": "Sulaiman","shipping_address": "Jl. Bersama"}}' localhost:<port>/order 
+```

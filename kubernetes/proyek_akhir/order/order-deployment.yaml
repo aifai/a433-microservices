@@ -15,7 +15,7 @@ spec:
         app: order
     spec:
       containers:
-        - name: order_service
+        - name: order
           image: ghcr.io/aifai/order-service
           imagePullPolicy: IfNotPresent
           ports:
@@ -26,5 +26,5 @@ spec:
             - name: NODE_ENV
               value: 'production'
             - name: AMQP_URL
-              value: ''
+              value: 'amqp://guest:guest@rabbitmq:5672'
                

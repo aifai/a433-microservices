@@ -15,7 +15,7 @@ spec:
         app: shipping
     spec:
       containers:
-        - name: shipping_service
+        - name: shipping
           image: ghcr.io/aifai/shipping-service
           imagePullPolicy: IfNotPresent
           ports:

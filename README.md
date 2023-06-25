@@ -1,6 +1,10 @@
 # a433-microservices
 Repository ini digunakan untuk kebutuhan kelas Belajar Membangun Arsitektur Microservices
 
+# manifest kubernetes
+### proyek kedua ada difolder kubernetes/proyek_kedua
+### proyek akhir ada difolder kubernetes/proyek_akhir
+
 # cara menggunakannya
 - Fetch semua branch
 ```bash

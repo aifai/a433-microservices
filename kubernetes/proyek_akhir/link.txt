@@ -1,0 +1,5 @@
+# untuk manifest kubernetes ada di folder kubernetes/proyek_akhir (branch main)
+
+https://github.com/users/aifai/packages/container/package/order-service
+
+https://github.com/users/aifai/packages/container/package/shipping-service

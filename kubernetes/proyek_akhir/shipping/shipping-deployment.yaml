@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipping-app
+  labels: 
+    app: shipping
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shipping
+  template:
+    metadata:
+      labels:
+        app: shipping
+    spec:
+      containers:
+        - name: shipping_service
+          image: ghcr.io/aifai/shipping-service
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3001
+          env:
+            - name: PORT
+              value: '3001'
+            - name: NODE_ENV
+              value: 'production'
+            - name: AMQP_URL
+              value: 'amqp://guest:guest@rabbitmq:5672'
+               

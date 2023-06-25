@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+  labels:
+    app: rabbitmq
+spec:
+  ports:
+    - name : "5672"
+      port: 5672
+      targetPort: 5672
+    - name: "15673"
+      port: 15673
+      targetPort: 15672
+  selector:
+    app: rabbitmq
